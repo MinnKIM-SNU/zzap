@@ -43,6 +43,16 @@
       background-color: #3f40d3;
       color: white;
     }
+      .nav-button {
+      background-color: #444;
+      color: white;
+      font-size: 0.9em;
+      padding: 6px 14px;
+    }
+    #bgm-player button {
+      background-color: #3f40d3 !important;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -71,8 +81,8 @@
   <div id="gym" class="hidden">
     <p>문이 굳게 잠겨 있다.</p>
     <button onclick="kickDoor()">문을 발로 찬다</button><br>
-    <button onclick="goTo('main-page')">메인 홀로 돌아가기</button>
-    <button onclick="goBack()">뒤로 가기</button>
+    <button class="nav-button" onclick="goTo('main-page')">메인 홀로 돌아가기</button>
+    <button class="nav-button" onclick="goBack()">뒤로 가기</button>
     <p id="gym-result"></p>
   </div>
 
@@ -80,21 +90,21 @@
     <p>책들이 아주 많다.</p>
     <button onclick="readBook()">책을 읽는다</button>
     <button onclick="goTo('bookshelf')">책장을 본다</button><br>
-    <button onclick="goTo('main-page')">메인 홀로 돌아가기</button>
-    <button onclick="goBack()">뒤로 가기</button>
+    <button class="nav-button" onclick="goTo('main-page')">메인 홀로 돌아가기</button>
+    <button class="nav-button" onclick="goBack()">뒤로 가기</button>
     <p id="library-result"></p>
   </div>
 
   <div id="bookshelf" class="hidden">
     <p>모든 책장에 룬의 아이들 시리즈가 꽂혀 있다.</p>
-    <button onclick="goTo('main-page')">메인 홀로 돌아가기</button>
-    <button onclick="goBack()">뒤로 가기</button>
+    <button class="nav-button" onclick="goTo('main-page')">메인 홀로 돌아가기</button>
+    <button class="nav-button" onclick="goBack()">뒤로 가기</button>
   </div>
 
   <div id="kitchen" class="hidden">
     <p>으믕의 생일 축하 케이크가 시속 50km로 날아다니고 있다. 당신은 케이크에 맞아서 사망했다.</p>
-    <button onclick="goTo('main-page')">메인 홀로 돌아가기</button>
-    <button onclick="goBack()">뒤로 가기</button>
+    <button class="nav-button" onclick="goTo('main-page')">메인 홀로 돌아가기</button>
+    <button class="nav-button" onclick="goBack()">뒤로 가기</button>
   </div>
 
   <script>
