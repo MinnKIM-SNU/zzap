@@ -142,107 +142,100 @@
   </div>
 
   <script>
-    const userData = {
-      mung0515: {
-        class: "피자마스터",
-        STR: 2,
-        INT: 5,
-        OBS: 5,
-        POW: 5,
-        LUC: 5,
-        key: 0
-      }
-    };
-
-    let currentUser = null;
-    let pageHistory = [];
-    const outputIds = ['gym-result', 'library-result'];
-
-    function showWelcomeMessage(userClass) {
-      document.getElementById('login-page').classList.add('hidden');
-      const messageBox = document.createElement('div');
-      messageBox.classList.add('typewriter');
-      messageBox.textContent = `미래기관이 초세계급 \"${userClass}\" 를 환영합니다. . .`;
-      document.body.insertBefore(messageBox, document.getElementById('main-page'));
-
-      setTimeout(() => {
-        document.getElementById('main-page').classList.remove('hidden');
-      }, 3600);
+  const userData = {
+    mung0515: {
+      class: "피자마스터",
+      STR: 2,
+      INT: 5,
+      OBS: 5,
+      POW: 5,
+      LUC: 5,
+      key: 0
     }
-        pageHistory.push('main-page');
-      } else {
-        document.getElementById('login-error').innerText = "아이디가 일치하지 않습니다. 확인 후 다시 입력해 주세요.";
-      }
-    }
+  };
 
-    function clearOutputs() {
-      outputIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = '';
-      });
-    }
+  let currentUser = null;
+  let pageHistory = [];
+  const outputIds = ['gym-result', 'library-result'];
 
-    function goTo(page) {
+  function checkLogin() {
+    const id = document.getElementById('id-input').value;
+    if (userData[id]) {
+      currentUser = userData[id];
+      showWelcomeMessage(currentUser.class);
+    } else {
+      document.getElementById('login-error').innerText = "아이디가 일치하지 않습니다. 확인 후 다시 입력해 주세요.";
+    }
+  }
+
+  function showWelcomeMessage(userClass) {
+    document.getElementById('login-page').classList.add('hidden');
+    const messageBox = document.createElement('div');
+    messageBox.classList.add('typewriter');
+    messageBox.textContent = `미래기관이 초세계급 \"${userClass}\" 를 환영합니다. . .`;
+    document.body.insertBefore(messageBox, document.getElementById('main-page'));
+
+    setTimeout(() => {
+      document.getElementById('main-page').classList.remove('hidden');
+      pageHistory.push('main-page');
+    }, 3600);
+  }
+
+  function clearOutputs() {
+    outputIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = '';
+    });
+  }
+
+  function goTo(page) {
+    document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
+    const target = document.getElementById(page);
+    target.classList.remove('hidden');
+    target.classList.add('fade-in');
+    clearOutputs();
+    pageHistory.push(page);
+
+    if (page === 'kitchen' || page === 'gym') {
+      const audio = new Audio('zzapaudio.mp3');
+      audio.loop = false;
+      audio.play();
+    }
+    if (page === 'kitchen') {
+      currentUser.key = 1;
+    }
+  }
+
+  function goBack() {
+    if (pageHistory.length > 1) {
+      pageHistory.pop();
+      const prev = pageHistory[pageHistory.length - 1];
       document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
-      const target = document.getElementById(page);
+      const target = document.getElementById(prev);
       target.classList.remove('hidden');
       target.classList.add('fade-in');
       clearOutputs();
-      pageHistory.push(page);
-
-      if (page === 'kitchen' || page === 'gym') {
-        const audio = new Audio('zzapaudio.mp3');
-        audio.loop = false;
-        audio.play();
-      }
-      if (page === 'kitchen') {
-        currentUser.key = 1;
-      }
     }
-      }
-    }
+  }
 
-    function goBack() {
-      if (pageHistory.length > 1) {
-        pageHistory.pop();
-        const prev = pageHistory[pageHistory.length - 1];
-        document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
-        const target = document.getElementById(prev);
-        target.classList.remove('hidden');
-        target.classList.add('fade-in');
-        clearOutputs();
-      }
+  function kickDoor() {
+    const result = document.getElementById('gym-result');
+    let messages = [];
+    if (currentUser.key === 1) {
+      messages.push("해피해피 코드");
     }
-
-    function kickDoor() {
-      const result = document.getElementById('gym-result');
-      let messages = [];
-      if (currentUser.key === 1) {
-        messages.push("해피해피 코드");
-      }
-      if (currentUser.STR <= 2) {
-        messages.push("발이 아프다. 들어갈 수 없는 것 같다.");
-      } else {
-        messages.push("문이 열린다!");
-      }
-      result.innerText = messages.join("
+    if (currentUser.STR <= 2) {
+      messages.push("발이 아프다. 들어갈 수 없는 것 같다.");
+    } else {
+      messages.push("문이 열린다!");
+    }
+    result.innerText = messages.join("
 ");
-    }
-      if (currentUser.STR <= 2) {
-        result.innerText = "발이 아프다. 들어갈 수 없는 것 같다.";
-      } else if (currentUser.STR > 2 && currentUser.key !== 1) {
-        result.innerText = "문이 열린다!";
-      }
-    } else if (currentUser.STR <= 2) {
-        result.innerText = "발이 아프다. 들어갈 수 없는 것 같다.";
-      } else {
-        result.innerText = "문이 열린다!";
-      }
-    }
+  }
 
-    function readBook() {
-      document.getElementById('library-result').innerText = "룬의 아이들 3부 블러디드 많관부!!!!";
-    }
-  </script>
+  function readBook() {
+    document.getElementById('library-result').innerText = "룬의 아이들 3부 블러디드 많관부!!!!";
+  }
+</script>
 </body>
 </html>
