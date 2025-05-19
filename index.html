@@ -61,12 +61,31 @@
     }
       .fade-in {
       opacity: 0;
-      animation: fadeIn 0.4s ease forwards;
+      animation: fadeIn 0.8s ease forwards;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+      .typewriter {
+      font-weight: bold;
+      font-size: 1.1em;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #3f40d3;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards, blink 0.75s step-end infinite;
+      margin-bottom: 1em;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
   </style>
 </head>
@@ -125,6 +144,7 @@
   <script>
     const userData = {
       mung0515: {
+        class: "피자마스터",
         STR: 2,
         INT: 5,
         OBS: 5,
@@ -138,12 +158,17 @@
     let pageHistory = [];
     const outputIds = ['gym-result', 'library-result'];
 
-    function checkLogin() {
-      const id = document.getElementById('id-input').value;
-      if (userData[id]) {
-        currentUser = userData[id];
-        document.getElementById('login-page').classList.add('hidden');
+    function showWelcomeMessage(userClass) {
+      document.getElementById('login-page').classList.add('hidden');
+      const messageBox = document.createElement('div');
+      messageBox.classList.add('typewriter');
+      messageBox.textContent = `미래기관이 초세계급 \"${userClass}\" 를 환영합니다. . .`;
+      document.body.insertBefore(messageBox, document.getElementById('main-page'));
+
+      setTimeout(() => {
         document.getElementById('main-page').classList.remove('hidden');
+      }, 3600);
+    }
         pageHistory.push('main-page');
       } else {
         document.getElementById('login-error').innerText = "아이디가 일치하지 않습니다. 확인 후 다시 입력해 주세요.";
