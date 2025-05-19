@@ -59,6 +59,15 @@
       font-size: 0.85em !important;
       padding: 5px 12px !important;
     }
+      .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -150,15 +159,21 @@
 
     function goTo(page) {
       document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
-      document.getElementById(page).classList.remove('hidden');
+      const target = document.getElementById(page);
+      target.classList.remove('hidden');
+      target.classList.add('fade-in');
       clearOutputs();
       pageHistory.push(page);
 
-      if (page === 'kitchen') {
+      if (page === 'kitchen' || page === 'gym') {
         const audio = new Audio('zzapaudio.mp3');
         audio.loop = false;
         audio.play();
+      }
+      if (page === 'kitchen') {
         currentUser.key = 1;
+      }
+    }
       }
     }
 
@@ -167,16 +182,33 @@
         pageHistory.pop();
         const prev = pageHistory[pageHistory.length - 1];
         document.querySelectorAll('div').forEach(div => div.classList.add('hidden'));
-        document.getElementById(prev).classList.remove('hidden');
+        const target = document.getElementById(prev);
+        target.classList.remove('hidden');
+        target.classList.add('fade-in');
         clearOutputs();
       }
     }
 
     function kickDoor() {
       const result = document.getElementById('gym-result');
+      let messages = [];
       if (currentUser.key === 1) {
-        result.innerText = "해피해피 코드";
-      } else if (currentUser.STR <= 2) {
+        messages.push("해피해피 코드");
+      }
+      if (currentUser.STR <= 2) {
+        messages.push("발이 아프다. 들어갈 수 없는 것 같다.");
+      } else {
+        messages.push("문이 열린다!");
+      }
+      result.innerText = messages.join("
+");
+    }
+      if (currentUser.STR <= 2) {
+        result.innerText = "발이 아프다. 들어갈 수 없는 것 같다.";
+      } else if (currentUser.STR > 2 && currentUser.key !== 1) {
+        result.innerText = "문이 열린다!";
+      }
+    } else if (currentUser.STR <= 2) {
         result.innerText = "발이 아프다. 들어갈 수 없는 것 같다.";
       } else {
         result.innerText = "문이 열린다!";
